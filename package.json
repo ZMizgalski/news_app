@@ -1,0 +1,42 @@
+{
+	"name": "news_app",
+	"version": "1.0.0",
+	"main": "app.js",
+	"license": "MIT",
+	"scripts": {
+		"start-prev": "node dist/app.js",
+		"start-dev": "ts-node backend/app.ts",
+		"build": "tsc -p tsconfig.json",
+		"create-ssl": "openssl genrsa -out backend/ssl/key.pem 2048 && openssl req -new -x509 -key backend/ssl/key.pem -out backend/ssl/ssl.crt -config backend/ssl/localhost.cnf && openssl req -new -out backend/ssl/ssl.csr -config backend/ssl/localhost.cnf && openssl x509 -req -in backend/ssl/ssl.csr -CA backend/ssl/ssl.crt -CAkey backend/ssl/key.pem -CAcreateserial -out backend/ssl/ca.crt"
+	},
+	"devDependencies": {
+		"@types/bcrypt": "^5.0.2",
+		"@types/cors": "^2.8.17",
+		"@types/express": "^4.17.21",
+		"@types/greenlock-express": "^4.0.3",
+		"@types/jsonwebtoken": "^9.0.5",
+		"@types/lodash.merge": "^4.6.9",
+		"@types/morgan": "^1.9.9",
+		"@types/node": "^20.10.2",
+		"prisma": "^5.6.0",
+		"ts-node": "^10.9.1",
+		"typescript": "^5.3.2"
+	},
+	"dependencies": {
+		"@prisma/client": "^5.6.0",
+		"bcrypt": "^5.1.1",
+		"colors": "^1.4.0",
+		"concurrently": "^8.2.2",
+		"cors": "^2.8.5",
+		"cross-env": "^7.0.3",
+		"dotenv": "^16.3.1",
+		"express": "^4.18.2",
+		"express-validator": "^7.0.1",
+		"greenlock-express": "^4.0.3",
+		"https": "^1.0.0",
+		"jsonwebtoken": "^9.0.2",
+		"lodash.merge": "^4.6.2",
+		"morgan": "^1.10.0",
+		"npm-run-all": "^4.1.5"
+	}
+}
