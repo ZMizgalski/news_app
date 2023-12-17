@@ -17,7 +17,7 @@ export const PickEnvConfig = (envConfigType?: string): EnvConfig => {
 	}
 
 	switch (envConfigType) {
-		case 'prod':
+		case 'production':
 			return (require('./configs/prod').config as EnvConfig);
 		case 'stage':
 			return (require('./configs/stage').config as EnvConfig);

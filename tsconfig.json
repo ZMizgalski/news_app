@@ -1,0 +1,14 @@
+{
+	"compilerOptions": {
+		"sourceMap": true,
+		"outDir": "./dist",
+		"lib": ["esnext"],
+		"esModuleInterop": true,
+		"declaration": true,
+		"rootDir": "./backend",
+	},
+	"include": [
+		"backend/**/*.ts",
+		"backend/ssl"
+	]
+}

@@ -4,10 +4,14 @@
 	"main": "app.js",
 	"license": "MIT",
 	"scripts": {
-		"start-prev": "node dist/app.js",
+		"start-prev": "cross-env STAGE=local node dist/app.js",
+		"start-prod-compiled": "cross-env STAGE=production PORT=80 node dist/app.js",
 		"start-dev": "ts-node backend/app.ts",
-		"build": "tsc -p tsconfig.json",
+		"build-b": "tsc -p tsconfig.json",
 		"start-f": "concurrently \"cd frontend && yarn start\"",
+		"build-f": "concurrently \"cd frontend && yarn build\"",
+		"copy-ssl": "copyfiles -u 1 ./backend/ssl/**/* ./dist",
+		"build": "concurrently \"yarn build-b && yarn build-f && yarn copy-ssl\"",
 		"create-ssl": "openssl genrsa -out backend/ssl/key.pem 2048 && openssl req -new -x509 -key backend/ssl/key.pem -out backend/ssl/ssl.crt -config backend/ssl/localhost.cnf && openssl req -new -out backend/ssl/ssl.csr -config backend/ssl/localhost.cnf && openssl x509 -req -in backend/ssl/ssl.csr -CA backend/ssl/ssl.crt -CAkey backend/ssl/key.pem -CAcreateserial -out backend/ssl/ca.crt"
 	},
 	"devDependencies": {
@@ -29,6 +33,7 @@
 		"bcrypt": "^5.1.1",
 		"colors": "^1.4.0",
 		"concurrently": "^8.2.2",
+		"copyfiles": "^2.4.1",
 		"cors": "^2.8.5",
 		"cross-env": "^7.0.3",
 		"dotenv": "^16.3.1",

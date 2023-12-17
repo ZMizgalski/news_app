@@ -18,13 +18,13 @@ if (config.stage === 'local') {
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-// app.use(express.static(__dirname + '/static'));
+app.use(express.static(__dirname + '/static'));
 
 app.use('/api', authProtectMiddleware, apiRouter);
 app.use('/auth', authRouter);
 
-// app.use('*', (req, res) => {
-// 	res.sendFile(__dirname + '/static/index.html');
-// });
+app.use('*', (req, res) => {
+	res.sendFile(__dirname + '/static/index.html');
+});
 
 export default app;
