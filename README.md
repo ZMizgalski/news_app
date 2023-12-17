@@ -98,3 +98,8 @@ To run this project, you will need to add the following environment variables to
 `DATABASE_URL=''`
 
 `JWT_SECRET=''`
+
+
+## Screenshots
+
+![Home](https://github.com/ZMizgalski/news_app/blob/main/screenshots/1.png)
