@@ -1,0 +1,32 @@
+<div class="surface-section h-full flex flex-column p-5">
+    <div class="font-medium text-3xl text-900 mb-3">Latest news</div>
+    <div class="text-500 mb-5">See all recieved messages</div>
+
+    <ul class="list-none p-0 m-0">
+        <ng-container *ngIf="$news | async as news; else NewsLoader">
+            <div
+                *ngIf="news.length === 0; else Elements"
+                class="flex align-items-center"
+            >
+                <i class="pi pi-info-circle px-2 text-3xl text-blue-600"></i> No elements found
+            </div>
+
+            <ng-template #Elements>
+                <li *ngFor="let inf of news" class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+                    <div class="flex flex-wrap w-8">
+                        <div class="text-500 w-6 px-2 font-medium">{{ inf.createdAt | date:'medium' }}</div>
+                        <div class="text-900 w-6 px-2 md:flex-order-0 flex-order-1">{{ inf.message }}</div>
+                    </div>
+
+                    <div class="w-4 p-1 flex justify-content-end">
+                        <p-tag [severity]="inf.type" [value]="inf.type | titlecase" class="p-2"></p-tag>
+                    </div>
+                </li>
+            </ng-template>
+        </ng-container>
+
+        <ng-template #NewsLoader>
+            <p-progressBar mode="indeterminate" [style]="{ height: '6px' }"></p-progressBar>
+        </ng-template>
+    </ul>
+</div>

@@ -11,6 +11,7 @@ authRouter.post('/register',
 	inputErrorsMiddleware,
 	body('username').exists(),
 	body('password').exists(),
+	body('role').exists(),
 	UserManager.register
 );
 

@@ -1,0 +1,19 @@
+<div class="h-full flex flex-column justify-content-center align-items-center surface-section px-4 py-8 md:px-6 lg:px-8">
+    <div class="text-700 text-center">
+        <div class="text-900 font-bold text-8xl mb-3">404</div>
+        <div class="text-700 text-1xl mb-5">We're sorry, but the page you're looking for could not be found. It might have been removed, had its name changed, or is temporarily unavailable.</div>
+
+        <ng-container *ngTemplateOutlet="ButtonBase; context: { $implicit: jwtService.$logged | async }"></ng-container>
+
+        <ng-template #ButtonBase let-logged>
+            <button
+                class="font-bold px-5 py-3 p-button-raised p-button-rounded white-space-nowrap"
+                pButton
+                pRipple
+                [label]="logged ? 'Return account' : 'Return home'"
+                [icon]="logged ? 'pi pi-user' : 'pi pi-home'"
+                (click)="makeRoute(logged)"
+            ></button>
+        </ng-template>
+    </div>
+</div>

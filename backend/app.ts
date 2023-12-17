@@ -9,16 +9,21 @@ import { green, yellow } from 'colors';
 import { ConfigType, config } from './config';
 import app from './server';
 
+import io from './socket';
+import { authSocketMiddleware } from './modules/protect-middleware';
+
 
 const logResponse = (config: ConfigType) => {
 	console.log(yellow('STAGE: %s'), config.stage);
 	console.log(green('MESSAGE: starting app on port %s'), config.port);
 }
 
+let serv;
+
 if (config.stage === 'production') {
-	app.listen(config.port, () => logResponse(config));
+	serv = app.listen(config.port, () => logResponse(config));
 } else {
-	https
+	serv = https
 		.createServer(
 			{
 				key: fs.readFileSync(__dirname + '/ssl/key.pem'),
@@ -28,3 +33,12 @@ if (config.stage === 'production') {
 			app)
 		.listen(config.port, () => logResponse(config));
 }
+
+io.attach(serv);
+io.use(authSocketMiddleware);  
+
+io.on('connection', (socket) => {
+	const id = socket.handshake.auth?.userId;
+
+	socket.join(id);
+});

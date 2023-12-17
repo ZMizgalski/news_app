@@ -8,6 +8,25 @@ import primsa from "../db";
 
 
 export const UserManager = {
+	getAllNews: async (
+		req: Request,
+		res: Response,
+		next: NextFunction
+	) => PrismaClientHandler(res, async () => {
+		const users = await primsa.new.findMany({
+			where: {
+				userId: req.params['id']
+			},
+			select: {
+				id: true,
+				message: true,
+				createdAt: true,
+				type: true
+			}
+		});
+	
+		res.json(users);
+	}),
 	register: async (
 		req: Request,
 		res: Response,
@@ -16,7 +35,8 @@ export const UserManager = {
 		const user = await primsa.user.create({
 			data: {
 				username: req.body.username,
-				password: await PasswordWorker.hashPassword(req.body.password)
+				password: await PasswordWorker.hashPassword(req.body.password),
+				role: req.body.role
 			}
 		});
 

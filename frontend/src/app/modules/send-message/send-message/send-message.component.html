@@ -1,0 +1,80 @@
+<ng-container *ngIf="$items | async as items">
+    <div class="card">
+        <p-table
+            #dt1
+            [value]="items"
+            dataKey="id"
+            [rows]="10"
+            [style]="{
+                'height': 'calc(100vh - 6rem)'
+            }"
+            scrollHeight="calc(100vh - 16rem)"
+            [showCurrentPageReport]="true"
+            [rowsPerPageOptions]="[10, 25, 50]"
+            [paginator]="true"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [globalFilterFields]="['id', 'username', 'createdAt']"
+            [scrollable]="true"
+        >
+            <ng-template pTemplate="caption">
+                <div class="flex">
+                    <span class="p-input-icon-left ml-auto">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" (input)="filter($event, dt1)" placeholder="Search keyword" />
+                    </span>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="min-width:15rem">
+                        <div class="flex align-items-center">
+                            Id
+                            <p-columnFilter type="text" field="id" display="menu"></p-columnFilter>
+                        </div>
+                    </th>
+                    <th style="min-width:15rem">
+                        <div class="flex align-items-center">
+                            Username
+                            <p-columnFilter type="text" field="username" display="menu"></p-columnFilter>
+                        </div>
+                    </th>
+                    <th style="min-width:15rem">
+                        <div class="flex align-items-center">
+                            CreatedAt
+                            <p-columnFilter type="text" field="createdAt" display="menu"></p-columnFilter>
+                        </div>
+                    </th>
+                    <th style="width: 3rem">
+                        <div class="flex align-items-center">
+                            Action
+                        </div>
+                    </th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-customer>
+                <tr>
+                    <td>
+                        {{ customer.id }}
+                    </td>
+                    <td>
+                        <span class="ml-1 vertical-align-middle">{{ customer.username }}</span>
+                    </td>
+                    <td>
+                        <span class="ml-1 vertical-align-middle">{{ customer.createdAt | date }}</span>
+                    </td>
+                    <td>
+                        <p-button (onClick)="sendMessage(customer.id)">Send</p-button>
+                    </td>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="7">No users found.</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</ng-container>

@@ -15,4 +15,22 @@ model User {
   createdAt DateTime @default(now())
   username  String   @unique
   password  String
+  role      String   @default("user")
+  news      New[]
+}
+
+model New {
+  id        String   @id @default(uuid())
+  message   String
+  createdAt DateTime @default(now())
+  type      Type
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+enum Type {
+  success
+  danger
+  warning
+  info
 }

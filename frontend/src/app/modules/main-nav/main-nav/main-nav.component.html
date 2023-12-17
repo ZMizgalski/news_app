@@ -1,0 +1,85 @@
+<p-toast></p-toast>
+
+<p-sidebar [(visible)]="navOpened">
+    <div class="flex flex-column p-2">
+        <ng-container *ngTemplateOutlet="RouteElements"></ng-container>
+
+        <div class="p-3">
+            <ng-container *ngTemplateOutlet="ToolbarStandard"></ng-container>
+        </div>
+    </div>
+</p-sidebar>
+
+<div class="flex flex-column">
+    <p-toolbar styleClass="border-noround h-6rem">
+        <div class="p-toolbar-group-start">
+            <ng-container *ngIf="($isHandset | async) === false">
+                <ng-container *ngTemplateOutlet="RouteElements"></ng-container>
+            </ng-container>
+        </div>
+
+        <div class="p-toolbar-group-end align-self-center">
+            <ng-container *ngIf="$isHandset | async; else ToolbarStandard">
+                <p-button
+                    (click)="navOpened = true"
+                    size="large"
+                    icon="pi pi-bars"
+                    [rounded]="true"
+                    [text]="true"
+                ></p-button>
+            </ng-container>
+        </div>
+    </p-toolbar>
+
+    <div class="flex flex-column w-full">
+        <router-outlet name="dashboard"></router-outlet>
+    </div>
+</div>
+
+<ng-template #ToolbarStandard>
+    <ng-container *ngIf="jwtService.$logged | async; else LoginButton">
+        <p-button (onClick)="logout()" label="Logout" [outlined]="true"></p-button>
+    </ng-container>
+
+    <ng-template #LoginButton>
+        <p-button
+            label="Login"
+            (onClick)="makeRoute('/dashboard', { dashboard: ['auth', { outlets: { auth: ['login'] } }] })"
+            [raised]="true"
+        ></p-button>
+    </ng-template>
+</ng-template>
+
+<ng-template #RouteElements>
+    <p-button
+        *ngIf="(jwtService.$logged | async) === false"
+        class="py-1 px-3"
+        (onClick)="makeRoute('/dashboard', { dashboard: ['home']})"
+        label="Home"
+        [text]="true"
+    ></p-button>
+
+    <p-button
+        *ngIf="jwtService.hasRole('user') | async"
+        class="py-1 px-3"
+        (onClick)="makeRoute('/dashboard', { dashboard: ['news']})"
+        label="News"
+        [text]="true"
+    ></p-button>
+
+    <p-button
+        *ngIf="jwtService.hasRole('admin') | async"
+        class="py-1 px-3"
+        (onClick)="makeRoute('/dashboard', { dashboard: ['send-message']})"
+        label="Send Message"
+        [text]="true"
+    ></p-button>
+
+    <p-button
+        *ngIf="jwtService.$logged | async"
+        class="py-1 px-3"
+        (onClick)="makeRoute('/dashboard', { dashboard: ['account']})"
+        label="Account"
+        [text]="true"
+    ></p-button>
+</ng-template>

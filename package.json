@@ -7,6 +7,7 @@
 		"start-prev": "node dist/app.js",
 		"start-dev": "ts-node backend/app.ts",
 		"build": "tsc -p tsconfig.json",
+		"start-f": "concurrently \"cd frontend && yarn start\"",
 		"create-ssl": "openssl genrsa -out backend/ssl/key.pem 2048 && openssl req -new -x509 -key backend/ssl/key.pem -out backend/ssl/ssl.crt -config backend/ssl/localhost.cnf && openssl req -new -out backend/ssl/ssl.csr -config backend/ssl/localhost.cnf && openssl x509 -req -in backend/ssl/ssl.csr -CA backend/ssl/ssl.crt -CAkey backend/ssl/key.pem -CAcreateserial -out backend/ssl/ca.crt"
 	},
 	"devDependencies": {
@@ -18,6 +19,7 @@
 		"@types/lodash.merge": "^4.6.9",
 		"@types/morgan": "^1.9.9",
 		"@types/node": "^20.10.2",
+		"@types/socket.io": "^3.0.2",
 		"prisma": "^5.6.0",
 		"ts-node": "^10.9.1",
 		"typescript": "^5.3.2"
@@ -37,6 +39,7 @@
 		"jsonwebtoken": "^9.0.2",
 		"lodash.merge": "^4.6.2",
 		"morgan": "^1.10.0",
-		"npm-run-all": "^4.1.5"
+		"npm-run-all": "^4.1.5",
+		"socket.io": "4.5.1"
 	}
 }

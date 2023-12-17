@@ -1,0 +1,45 @@
+<form
+    class="flex flex-column align-items-center p-5 surface-overlay border-round"
+    [formGroup]="form"
+    (ngSubmit)="onSubmit()"
+>
+    <p class="p-2 m-0 font-bold">Type</p>
+
+    <p-listbox
+        class="p-2"
+        optionLabel="name"
+        [options]="options"
+        formControlName="type"
+        [style]="{ 'width':'17rem' }"
+        [listStyle]="{ 'max-height': '220px' }"
+    ></p-listbox>
+
+    <p class="m-0 p-2 font-bold">Content</p>
+
+    <textarea
+        class="m-2"
+        rows="5"
+        cols="30"
+        pInputTextarea
+        [autoResize]="true"
+        formControlName="message"
+    ></textarea>
+
+    <div class="mt-6 flex w-12 justify-content-between">
+        <p-button
+            type="submit"
+            label="Save"
+            [iconPos]="'left'"
+            [icon]="(loading | async) ? 'pi pi-spin pi-spinner' : 'pi pi-save'"
+            [disabled]="form.invalid || (loading | async) ?? false"
+        ></p-button>
+
+        <p-button
+            type="button"
+            severity="danger"
+            label="Close"
+            [outlined]="true"
+            (onClick)="closeDialog()"
+        ></p-button>
+    </div>
+</form>

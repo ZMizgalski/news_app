@@ -1,4 +1,5 @@
 import { User } from './models/user';
+
 import jwt from 'jsonwebtoken';
 
 
@@ -6,7 +7,8 @@ export const JWTWorker = {
 	createJWT: (user: User) => jwt.sign(
 		{
 			id: user.id,
-			username: user.username
+			username: user.username,
+			role: user.role
 		},
 		process.env.JWT_SECRET!,
 		{
