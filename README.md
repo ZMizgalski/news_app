@@ -1,8 +1,7 @@
 
 # news_app
 
-A simple angular app with jwt authorization and socket-io bullet messages
-
+This is a web application built using Angular. It features JWT (JSON Web Tokens) for secure authorization, ensuring that data transmitted between parties remains confidential. The application also utilizes Socket.IO to implement a "bullet messages" feature, providing real-time, bidirectional, and event-based communication between the client and server. This allows for a live comment stream where users' messages are displayed dynamically across the screen.
 
 
 ## Authors
